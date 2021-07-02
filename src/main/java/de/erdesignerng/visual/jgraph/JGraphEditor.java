@@ -827,7 +827,7 @@ public class JGraphEditor extends DefaultScrollPane implements GenericModelEdito
     public boolean supportsViewAction() {
         return true;
     }
-
+    
     @Override
     public boolean supportsIntelligentLayout() {
         return true;

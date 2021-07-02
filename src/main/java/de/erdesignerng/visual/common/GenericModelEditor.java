@@ -154,7 +154,7 @@ public interface GenericModelEditor {
     boolean supportsCommentAction();
 
     boolean supportsViewAction();
-
+   
     boolean supportsIntelligentLayout();
 
     void initExportEntries(ResourceHelperProvider aProvider, DefaultMenu aExportMenu);
@@ -172,6 +172,6 @@ public interface GenericModelEditor {
     boolean supportsDeletionOfObjects();
 
     boolean supportShowingAndHidingOfRelations();
-
+    
     void initLayoutMenu(ERDesignerComponent aComponent, DefaultMenu aLayoutMenu);
 }

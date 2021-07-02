@@ -27,6 +27,15 @@ public interface ERDesignerBundle {
 	/** . */
 	String TITLE = "TITLE";
 
+	/** \u0047\u0075\u0069\u0064\u0065. */
+	String GUIDE = "GUIDE";
+
+	/** \u0042\u0061\u0073\u0069\u0063. */
+	String BASICGUIDE = "BASICGUIDE";
+
+	/** \u0045\u0078\u0070\u0065\u0072\u0074. */
+	String EXPERTGUIDE = "EXPERTGUIDE";
+
 	/** \u0046\u0069\u006c\u0065. */
 	String FILE = "FILE";
 

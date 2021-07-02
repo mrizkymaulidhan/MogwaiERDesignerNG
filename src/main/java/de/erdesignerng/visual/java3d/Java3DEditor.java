@@ -984,7 +984,7 @@ public class Java3DEditor implements GenericModelEditor {
     public boolean supportsViewAction() {
         return false;
     }
-
+    
     @Override
     public void initExportEntries(ResourceHelperProvider aProvider, DefaultMenu aExportMenu) {
         aExportMenu.setEnabled(false);
@@ -1037,5 +1037,5 @@ public class Java3DEditor implements GenericModelEditor {
     @Override
     public boolean supportsIntelligentLayout() {
         return false;
-    }
-}
+    }  
+ }

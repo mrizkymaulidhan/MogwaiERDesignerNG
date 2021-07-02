@@ -23,6 +23,7 @@ package de.erdesignerng.visual.common;
  * @author $Author: mirkosertic $
  * @version $Date: 2009-03-09 19:07:30 $
  */
+
 public enum ToolEnum {
     HAND, ENTITY, RELATION, COMMENT, VIEW
 }

@@ -45,9 +45,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -76,7 +74,7 @@ public final class ERDesignerComponent implements ResourceHelperProvider {
     private JToggleButton relationButton;
 
     private JToggleButton viewButton;
-
+    
     private JToggleButton entityButton;
 
     private DefaultMenu lruMenu;
@@ -119,7 +117,7 @@ public final class ERDesignerComponent implements ResourceHelperProvider {
     private DefaultAction commentAction;
 
     private DefaultAction viewAction;
-
+    
     private DefaultCheckBox intelligentLayoutCheckbox;
 
     private DefaultMenu exportMenu;
@@ -305,14 +303,13 @@ public final class ERDesignerComponent implements ResourceHelperProvider {
         entityAction.setEnabled(aEditor.supportsEntityAction());
         relationAction.setEnabled(aEditor.supportsRelationAction());
         commentAction.setEnabled(aEditor.supportsCommentAction());
-        viewAction.setEnabled(aEditor.supportsViewAction());
         intelligentLayoutCheckbox.setEnabled(aEditor.supportsIntelligentLayout());
         displayCommentsAction.setEnabled(aEditor.supportsCommentAction());
         displayGridAction.setEnabled(aEditor.supportsGrid());
         displayLevelMenu.setEnabled(aEditor.supportsDisplayLevel());
         subjectAreas.setEnabled(aEditor.supportsSubjectAreas());
         displayOrderMenu.setEnabled(aEditor.supportsAttributeOrder());
-
+                
         exportMenu.removeAll();
         aEditor.initExportEntries(this, exportMenu);
         exportMenu.add(new DefaultMenuItem(exportOpenXavaAction));
@@ -334,12 +331,70 @@ public final class ERDesignerComponent implements ResourceHelperProvider {
         currentTool = aTool;
         editor.commandSetTool(aTool);
     }
-
+    
+    /* MODIFIKASI GUIDE MENU */
+    protected void commandShowBasicGuide() {
+        ClassLoader classLoader = getClass().getClassLoader();
+        File pdfFile = new File("MogwaiERDesignerNG-Basic.pdf");
+        if (!pdfFile.canRead() || !pdfFile.canWrite()){
+            pdfFile.setWritable(true);
+            pdfFile.setReadable(true);
+        }
+        try {            
+            InputStream inputStream = (classLoader.getResourceAsStream(
+                    "de/erdesignerng/userguide/MogwaiERDesignerNG-Basic.pdf"));
+            OutputStream outputStream = new FileOutputStream(pdfFile);
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = inputStream.read(buffer)) > 0) {
+                outputStream.write(buffer, 0, length);
+            }
+            outputStream.close();
+            inputStream.close();
+            Desktop.getDesktop().open(pdfFile);
+        } catch (Exception e) {
+            worldConnector.notifyAboutException(e);
+        }
+    }
+    
+    protected void commandShowExpertGuide() {
+        ClassLoader classLoader = getClass().getClassLoader();
+        File pdfFile = new File("MogwaiERDesignerNG-Expert.pdf");
+        if (!pdfFile.canRead() || !pdfFile.canWrite()){
+            pdfFile.setWritable(true);
+            pdfFile.setReadable(true);
+        }
+        try {            
+            InputStream inputStream = (classLoader.getResourceAsStream(
+                    "de/erdesignerng/userguide/MogwaiERDesignerNG-Expert.pdf"));
+            OutputStream outputStream = new FileOutputStream(pdfFile);
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = inputStream.read(buffer)) > 0) {
+                outputStream.write(buffer, 0, length);
+            }
+            outputStream.close();
+            inputStream.close();
+            Desktop.getDesktop().open(pdfFile);
+        } catch (Exception e) {
+            worldConnector.notifyAboutException(e);
+        }
+    }    
+    /* ------ */
+    
     protected final void initActions() {
 
         // Required by Java3D
         JPopupMenu.setDefaultLightWeightPopupEnabled(false);
-
+        
+        /* MODIFIKASI GUIDE MENU */
+        DefaultAction theBasicGuideAction = new DefaultAction(
+                aEvent -> commandShowBasicGuide(), this, ERDesignerBundle.BASICGUIDE);
+              
+        DefaultAction theExpertGuideAction = new DefaultAction(
+                aEvent -> commandShowExpertGuide(), this, ERDesignerBundle.EXPERTGUIDE);
+        /* ------ */
+                      
         DefaultAction theReverseEngineerAction = new DefaultAction(
                 new ReverseEngineerCommand(), this,
                 ERDesignerBundle.REVERSEENGINEER);
@@ -410,7 +465,7 @@ public final class ERDesignerComponent implements ResourceHelperProvider {
                         viewButton.setSelected(true);
                     }
                 }, this, ERDesignerBundle.VIEWTOOL);
-
+                
         DefaultAction theExportAction = new DefaultAction(this,
                 ERDesignerBundle.EXPORT);
 
@@ -570,8 +625,7 @@ public final class ERDesignerComponent implements ResourceHelperProvider {
         theDBMenu.addSeparator();
         theDBMenu.add(new DefaultMenuItem(theCkeckModelAction));
         theDBMenu.addSeparator();
-        theDBMenu
-                .add(new DefaultMenuItem(theCompleteCompareWithDatabaseAction));
+        theDBMenu.add(new DefaultMenuItem(theCompleteCompareWithDatabaseAction));
         theDBMenu.add(new DefaultMenuItem(theCompleteCompareWithModelAction));
         theDBMenu.addSeparator();
         theDBMenu.add(new DefaultMenuItem(theConvertModelAction));
@@ -733,12 +787,26 @@ public final class ERDesignerComponent implements ResourceHelperProvider {
         zoomBox.setMaximumSize(new Dimension(100, 21));
         zoomBox.setAction(theZoomAction);
         zoomBox.setModel(theZoomModel);
-
+        
+        /* --- MODIFIKASI GUIDE MENU --- */ 
+        ERDesignerToolbarEntry theGuideMenu = new ERDesignerToolbarEntry(
+            ERDesignerBundle.GUIDE);
+        
+        theGuideMenu.add(new DefaultMenuItem(theBasicGuideAction));
+        theGuideMenu.addSeparator();
+        theGuideMenu.add(new DefaultMenuItem(theExpertGuideAction));
+        
+        theGuideMenu.setToolTipText("Guide Menu");
+        /* ------ */
+        
         DefaultToolbar theToolBar = worldConnector.getToolBar();
 
         theToolBar.add(theFileMenu);
         theToolBar.add(theDBMenu);
         theToolBar.add(theViewMenu);
+        /* --- MODIFIKASI GUIDE MENU --- */
+        theToolBar.add(theGuideMenu);
+        /* ------ */
         theToolBar.addSeparator();
 
         theToolBar.add(theNewAction);

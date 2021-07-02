@@ -121,6 +121,11 @@
                                         <include name="**/*.mxm"/>
                                         <include name="**/*.sql"/>
                                     </fileset>
+                                </copy> 
+                                <copy todir="${staging.dir}/userguide">
+                                    <fileset dir="${basedir}/src/main/resources/de/erdesignerng/userguide">
+                                        <include name="**/*.pdf"/>
+                                    </fileset>
                                 </copy>
                                 <copy todir="${staging.dir}/icons">
                                     <fileset dir="${basedir}/src/main/resources/de/erdesignerng/icons">
@@ -584,7 +589,7 @@
                 </os>
             </activation>
             <build>
-                <plugins>
+                <plugins>                    
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>exec-maven-plugin</artifactId>
@@ -695,9 +700,9 @@
                                 </configuration>
                             </execution>
                         </executions>
-                    </plugin>
+                    </plugin>                    
                 </plugins>
-            </build>
+            </build>           
         </profile>
         <profile>
             <id>fxrelease-osx</id>

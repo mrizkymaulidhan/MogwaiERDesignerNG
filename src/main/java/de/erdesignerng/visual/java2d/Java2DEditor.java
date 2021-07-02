@@ -270,7 +270,7 @@ public class Java2DEditor implements GenericModelEditor {
     public boolean supportsViewAction() {
         return false;
     }
-
+   
     @Override
     public void initExportEntries(ResourceHelperProvider aProvider, DefaultMenu aExportMenu) {
         aExportMenu.setEnabled(false);
@@ -310,7 +310,7 @@ public class Java2DEditor implements GenericModelEditor {
     public boolean supportShowingAndHidingOfRelations() {
         return false;
     }
-
+    
     private void generateGraphFor(Table aTable) {
 
         Map<ModelItem, EditorPanel.EditorComponent> theComponentMap = new HashMap<>();
