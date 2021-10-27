@@ -93,7 +93,7 @@ public abstract class BaseEditor extends DefaultDialog implements DialogConstant
     @Override
     public int showModal() {
         modalResult = DialogConstants.MODAL_RESULT_CANCEL;
-        setVisible(true);
+        setVisible(false);
 
         return modalResult;
     }

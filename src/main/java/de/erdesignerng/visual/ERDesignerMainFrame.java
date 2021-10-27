@@ -33,6 +33,8 @@ import org.apache.log4j.Logger;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  * @author $Author: mirkosertic $
@@ -59,10 +61,17 @@ public class ERDesignerMainFrame extends DefaultFrame implements
         setIconImage(IconFactory.getERDesignerIcon().getImage());
 
         addWindowListener(new WindowAdapter() {
-
             @Override
             public void windowClosing(WindowEvent e) {
-                exitApplication();
+                int result = JOptionPane.showConfirmDialog(null,
+                        "Do you want to exit?", "Exit confirmation: ",
+                        JOptionPane.YES_NO_OPTION);
+                if (result == JOptionPane.YES_OPTION){
+                    exitApplication();
+                }
+                else if (result == JOptionPane.NO_OPTION) {
+                    setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+                }
             }
         });
 

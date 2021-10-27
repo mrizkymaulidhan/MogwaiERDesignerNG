@@ -75,7 +75,7 @@ public final class ERDesigner {
 
 		final ERDesignerMainFrame frame = new ERDesignerMainFrame();
 		frame.setModel(frame.createNewModel());
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
 
 		try {
 			Thread.sleep(1000);
